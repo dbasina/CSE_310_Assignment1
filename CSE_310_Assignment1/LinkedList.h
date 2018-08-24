@@ -79,8 +79,9 @@ bool LinkedList::isFound(string bookTitle)
 //Return value: true if it is successfully inserted and false in case of other failures.
 bool LinkedList::addBook(string bookTitle, int bookPages, double bookPrice)
 {
-    //fill in your codes here
-    //----
+    //Allocate Space for book
+    // Create and initialize book
+    // Add to list in alphabetical order.
     
 }
 
