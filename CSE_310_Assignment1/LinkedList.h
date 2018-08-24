@@ -50,8 +50,7 @@ LinkedList::~LinkedList()
 {
     //fill in your codes here
     //----
-    
-    cout<< "The number of deleted books is: " << //bookCount <<"\n";
+    //cout<< "The number of deleted books is: " << bookCount <<"\n";
 }
 
 //A function to identify if a book is inside the LinkedList or not.
@@ -79,9 +78,58 @@ bool LinkedList::isFound(string bookTitle)
 //Return value: true if it is successfully inserted and false in case of other failures.
 bool LinkedList::addBook(string bookTitle, int bookPages, double bookPrice)
 {
-    //Allocate Space for book
-    // Create and initialize book
-    // Add to list in alphabetical order.
+   // Check if book already exits
+    if (!(isFound(bookTitle)))
+    {
+        //Create space and initialize new entry.
+        struct Book *new_book = (struct Book*) malloc(sizeof(struct Book));
+        new_book->title= bookTitle;
+        new_book->pages= bookPages;
+        new_book->price= bookPrice;
+        
+        // Search for an appropriate location for book.
+        
+        // Check if list is empty
+        if (head!=nullptr)
+        {
+            struct Book *tracker = head;
+            struct Book *previous = tracker;
+            while ((tracker->title).compare(new_book->title)<0 && tracker!= nullptr)
+            {
+                previous=tracker;
+                tracker = tracker->next;
+            }
+            
+            // Check if number of elements in list > 1
+            if (head->next!=nullptr)
+            {
+                previous->next = new_book;
+                new_book->next = tracker;
+            }
+            
+            // If number of elements = 1
+            else
+            {
+                new_book->next=tracker;
+                head=new_book;
+            }
+            
+        
+        }
+        
+        // If list empty
+        else
+        {
+            new_book->next = head;
+            head= new_book;
+        }
+        
+        return true;
+    }
+    else
+    {
+        return false;
+    }
     
 }
 
@@ -91,7 +139,6 @@ bool LinkedList::removeBook(string bookTitle)
 {
     //fill in your codes here
     //----
-    
 }
 
 //Modifies the data of the given book.
