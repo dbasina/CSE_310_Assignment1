@@ -123,7 +123,6 @@ bool LinkedList::addBook(string bookTitle, int bookPages, double bookPrice)
             new_book->next = head;
             head= new_book;
         }
-        
         return true;
     }
     else
@@ -137,32 +136,83 @@ bool LinkedList::addBook(string bookTitle, int bookPages, double bookPrice)
 //Return true if it is successfully removed, false otherwise.
 bool LinkedList::removeBook(string bookTitle)
 {
-    //fill in your codes here
-    //----
+    if (!(isFound(bookTitle)))
+    {
+        struct Book *tracker = head;
+        struct Book *previous = tracker;
+        struct Book *temp =nullptr;
+        while ((tracker->title).compare(bookTitle)!=0)
+        {
+            previous=tracker;
+            tracker = tracker->next;
+        }
+        
+        previous->next = tracker->next;
+        temp = tracker;
+        free (temp);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 //Modifies the data of the given book.
 //Return true if it modifies successfully and false otherwise.
 bool LinkedList::changeBookTitle(string oldBookTitle, string newBookTitle)
 {
-    //fill in your codes here
-    //----
-    
+    // Check if book exists.
+    if (!(isFound(oldBookTitle)))
+    {
+        // Find book and change title.
+        struct Book *tracker = head;
+        while ((tracker->title).compare(oldBookTitle)!=0)
+        {
+            tracker = tracker->next;
+        }
+        
+        tracker->title = newBookTitle;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool LinkedList::changeBookPrice(string bookTitle, double newPrice)
 {
-    //fill in your codes here
-    //----
-    
+    // Check if book exists.
+    if (!(isFound(bookTitle)))
+    {
+        // Find book and change Price.
+        struct Book *tracker = head;
+        while ((tracker->title).compare(bookTitle)!=0)
+        {
+            tracker = tracker->next;
+        }
+        
+        tracker->price = newPrice;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 //Prints all the elements in the linked list starting from the head node.
 void LinkedList::printBookList()
 {
-    //fill in your codes here
-    //----
-    
+    struct Book *tracker = head;
+    while (tracker!=nullptr)
+    {
+        //Print
+        //Book Title: Purple Hibiscus, 307, 14.95
+        cout<< "Book Title: " << tracker->title << ", " << tracker->pages <<", "<< tracker->price <<endl;
+        tracker = tracker->next;
+    }
 }
 // Adding more functionality in the Tutorial Branch
 
