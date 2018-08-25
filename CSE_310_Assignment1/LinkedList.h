@@ -48,9 +48,20 @@ LinkedList::LinkedList()
 //It deletes all the nodes including the head and finally prints the number of nodes deleted by it.
 LinkedList::~LinkedList()
 {
-    //fill in your codes here
-    //----
-    //cout<< "The number of deleted books is: " << bookCount <<"\n";
+    // Write a loop to traverse the linkedlist
+    // Inside loop, access the title of every book
+    // use removeBook method on each title.
+    struct Book *tracker = head;
+    struct Book *previous=nullptr;
+    int count=0;
+    while (tracker!=nullptr)
+    {
+        previous = tracker;
+        tracker = tracker->next;
+        removeBook(previous->title);
+        count = count+1;
+    }
+    cout << "The number of deleted books is: " << count << endl;
 }
 
 //A function to identify if a book is inside the LinkedList or not.
@@ -93,25 +104,25 @@ bool LinkedList::addBook(string bookTitle, int bookPages, double bookPrice)
         if (head!=nullptr)
         {
             struct Book *tracker = head;
-            struct Book *previous = tracker;
-            while ((tracker->title).compare(new_book->title)<0 && tracker!= nullptr)
+            struct Book *previous = nullptr;
+            while ((tracker !=nullptr) && ((tracker->title).compare(new_book->title)<0))
             {
                 previous=tracker;
                 tracker = tracker->next;
             }
+        
+            // If new book is smallest.
+            if (tracker==head)
+            {
+                new_book->next=head;
+                head=new_book;
+            }
             
-            // Check if number of elements in list > 1
-            if (head->next!=nullptr)
+            // Check if new_book is greatest
+            else
             {
                 previous->next = new_book;
                 new_book->next = tracker;
-            }
-            
-            // If number of elements = 1
-            else
-            {
-                new_book->next=tracker;
-                head=new_book;
             }
             
         
@@ -136,10 +147,10 @@ bool LinkedList::addBook(string bookTitle, int bookPages, double bookPrice)
 //Return true if it is successfully removed, false otherwise.
 bool LinkedList::removeBook(string bookTitle)
 {
-    if (!(isFound(bookTitle)))
+    if (isFound(bookTitle))
     {
         struct Book *tracker = head;
-        struct Book *previous = tracker;
+        struct Book *previous = nullptr;
         struct Book *temp =nullptr;
         while ((tracker->title).compare(bookTitle)!=0)
         {
@@ -147,10 +158,24 @@ bool LinkedList::removeBook(string bookTitle)
             tracker = tracker->next;
         }
         
-        previous->next = tracker->next;
-        temp = tracker;
-        free (temp);
-        return true;
+        if (previous != nullptr)
+        {
+            temp = tracker;
+            previous->next = tracker->next;
+            tracker->next= nullptr;
+            free (temp);
+            return true;
+        }
+        
+        else
+        {
+            temp = tracker;
+            head = tracker->next;
+            tracker->next=nullptr;
+            free (temp);
+            return true;
+        }
+       
     }
     else
     {
@@ -163,7 +188,7 @@ bool LinkedList::removeBook(string bookTitle)
 bool LinkedList::changeBookTitle(string oldBookTitle, string newBookTitle)
 {
     // Check if book exists.
-    if (!(isFound(oldBookTitle)))
+    if (isFound(oldBookTitle))
     {
         // Find book and change title.
         struct Book *tracker = head;
@@ -184,7 +209,7 @@ bool LinkedList::changeBookTitle(string oldBookTitle, string newBookTitle)
 bool LinkedList::changeBookPrice(string bookTitle, double newPrice)
 {
     // Check if book exists.
-    if (!(isFound(bookTitle)))
+    if (isFound(bookTitle))
     {
         // Find book and change Price.
         struct Book *tracker = head;
