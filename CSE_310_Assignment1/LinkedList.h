@@ -111,14 +111,13 @@ bool LinkedList::addBook(string bookTitle, int bookPages, double bookPrice)
                 tracker = tracker->next;
             }
         
-            // If new book is smallest.
+            // If new_book is smallest.
             if (tracker==head)
             {
                 new_book->next=head;
                 head=new_book;
             }
             
-            // Check if new_book is greatest
             else
             {
                 previous->next = new_book;
@@ -147,8 +146,12 @@ bool LinkedList::addBook(string bookTitle, int bookPages, double bookPrice)
 //Return true if it is successfully removed, false otherwise.
 bool LinkedList::removeBook(string bookTitle)
 {
+    // Locate Book
     if (isFound(bookTitle))
     {
+        // Track book location
+        // Update pointers to maintain list.
+        // free book from temporary pointer.
         struct Book *tracker = head;
         struct Book *previous = nullptr;
         struct Book *temp =nullptr;
@@ -157,7 +160,7 @@ bool LinkedList::removeBook(string bookTitle)
             previous=tracker;
             tracker = tracker->next;
         }
-        
+        // If the book to be removed is not the first book
         if (previous != nullptr)
         {
             temp = tracker;
@@ -166,7 +169,7 @@ bool LinkedList::removeBook(string bookTitle)
             free (temp);
             return true;
         }
-        
+        // If the book to be removed is the first book
         else
         {
             temp = tracker;
@@ -177,6 +180,7 @@ bool LinkedList::removeBook(string bookTitle)
         }
        
     }
+    // If book not found
     else
     {
         return false;
@@ -200,6 +204,7 @@ bool LinkedList::changeBookTitle(string oldBookTitle, string newBookTitle)
         tracker->title = newBookTitle;
         return true;
     }
+    // If book DNE
     else
     {
         return false;
@@ -221,6 +226,7 @@ bool LinkedList::changeBookPrice(string bookTitle, double newPrice)
         tracker->price = newPrice;
         return true;
     }
+    // If book DNE
     else
     {
         return false;
@@ -234,10 +240,13 @@ void LinkedList::printBookList()
     while (tracker!=nullptr)
     {
         //Print
-        //Book Title: Purple Hibiscus, 307, 14.95
+        //Format----Book Title: Purple Hibiscus, 307, 14.95
         cout<< "Book Title: " << tracker->title << ", " << tracker->pages <<", "<< tracker->price <<endl;
         tracker = tracker->next;
     }
 }
-// Adding more functionality in the Tutorial Branch
+// Commit and push regularly!!
+// Modify the tutorial branch.
+// Get familiar with branching.
+
 
