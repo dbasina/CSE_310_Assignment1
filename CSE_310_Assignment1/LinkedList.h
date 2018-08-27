@@ -8,6 +8,8 @@
 #include <iostream>
 #include <iomanip> //to format the output
 #include <string>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -52,9 +54,9 @@ LinkedList::~LinkedList()
     // Inside loop, access the title of every book
     // use removeBook method on each title.
     struct Book *tracker = head;
-    struct Book *previous=nullptr;
+    struct Book *previous=NULL;
     int count=0;
-    while (tracker!=nullptr)
+    while (tracker!=NULL)
     {
         previous = tracker;
         tracker = tracker->next;
@@ -93,7 +95,7 @@ bool LinkedList::addBook(string bookTitle, int bookPages, double bookPrice)
     if (!(isFound(bookTitle)))
     {
         //Create space and initialize new entry.
-        struct Book *new_book = (struct Book*) malloc(sizeof(struct Book));
+        Book *new_book = new Book();
         new_book->title= bookTitle;
         new_book->pages= bookPages;
         new_book->price= bookPrice;
@@ -101,11 +103,11 @@ bool LinkedList::addBook(string bookTitle, int bookPages, double bookPrice)
         // Search for an appropriate location for book.
         
         // Check if list is empty
-        if (head!=nullptr)
+        if (head!=NULL)
         {
             struct Book *tracker = head;
-            struct Book *previous = nullptr;
-            while ((tracker !=nullptr) && ((tracker->title).compare(new_book->title)<0))
+            struct Book *previous = NULL;
+            while ((tracker !=NULL) && ((tracker->title).compare(new_book->title)<0))
             {
                 previous=tracker;
                 tracker = tracker->next;
@@ -153,20 +155,20 @@ bool LinkedList::removeBook(string bookTitle)
         // Update pointers to maintain list.
         // free book from temporary pointer.
         struct Book *tracker = head;
-        struct Book *previous = nullptr;
-        struct Book *temp =nullptr;
+        struct Book *previous = NULL;
+        struct Book *temp =NULL;
         while ((tracker->title).compare(bookTitle)!=0)
         {
             previous=tracker;
             tracker = tracker->next;
         }
         // If the book to be removed is not the first book
-        if (previous != nullptr)
+        if (previous != NULL)
         {
             temp = tracker;
             previous->next = tracker->next;
-            tracker->next= nullptr;
-            free (temp);
+            tracker->next= NULL;
+            delete temp;
             return true;
         }
         // If the book to be removed is the first book
@@ -174,8 +176,8 @@ bool LinkedList::removeBook(string bookTitle)
         {
             temp = tracker;
             head = tracker->next;
-            tracker->next=nullptr;
-            free (temp);
+            tracker->next=NULL;
+            delete temp;
             return true;
         }
        
@@ -237,7 +239,7 @@ bool LinkedList::changeBookPrice(string bookTitle, double newPrice)
 void LinkedList::printBookList()
 {
     struct Book *tracker = head;
-    while (tracker!=nullptr)
+    while (tracker!=NULL)
     {
         //Print
         //Format----Book Title: Purple Hibiscus, 307, 14.95
